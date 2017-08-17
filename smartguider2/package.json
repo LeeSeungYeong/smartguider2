@@ -1,0 +1,24 @@
+{
+  "name": "smartguider2",
+  "version": "1.0.0",
+  "description": "smartguider2_mean",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www",
+    "populate": "node ./bin/populate_db"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.5.0",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.0.0",
+    "express": "^4.15.4",
+    "mongoose": "^4.10.8",
+    "mongoose-post-find": "0.0.2",
+    "morgan": "^1.8.2",
+    "serve-favicon": "^2.4.3"
+  }
+}
