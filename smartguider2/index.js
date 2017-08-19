@@ -4,25 +4,30 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-require('./lib/connection');
 
-var employees = require('./routes/employees');
-var teams = require('./routes/teams');
+
+// ì´ë¯¸ì§€ ì—…ë¡œë“œ
+var multer = require('multer');
+
+
+require('./lib/connection');
+var spots = require('./routes/spots');
+var sights = require('./routes/sights');
 
 var app = express();
 
+// app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));   //Á¤Àû ÆÄÀÏ
+app.use(express.static(path.join(__dirname, 'public')));
 
-// ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¶ó¿ìÆ®
-app.use(employees);
-app.use(teams);
+// ì• í”Œë¦¬ì¼€ì´ì…˜ ë¼ìš°íŠ¸
+app.use(spots);
+app.use(sights);
 
-
-// 404¸¦ Àâ¾Æ ¿À·ù Ã³¸®±â·Î Àü´Ş
+// 404ë¥¼ ì¡ì•„ ì˜¤ë¥˜ ì²˜ë¦¬ê¸°ë¡œ ì „ë‹¬
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
 
@@ -30,9 +35,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// ¿À·ù Ã³¸®±â
+// ì˜¤ë¥˜ ì²˜ë¦¬ê¸°
 
-// ½ºÅÃ ÃßÀûÀ» Ãâ·ÂÇÏ´Â °³¹ßÀÚ¿ë ¿À·ù Ã³¸®±â
+// ìŠ¤íƒ ì¶”ì ì„ ì¶œë ¥í•˜ëŠ” ê°œë°œììš© ì˜¤ë¥˜ ì²˜ë¦¬ê¸°
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -43,14 +48,46 @@ if (app.get('env') === 'development') {
   });
 }
 
-// ½ÇÁ¦ ¼­ºñ½º¿ë ¿À·ù Ã³¸®±â
-// »ç¿ëÀÚ¿¡°Ô ½ºÅÃ ÃßÀûÀ» À¯ÃâÇÏÁö ¾Ê´Â´Ù.
+// ì‹¤ì œ ì„œë¹„ìŠ¤ìš© ì˜¤ë¥˜ ì²˜ë¦¬ê¸°
+// ì‚¬ìš©ìì—ê²Œ ìŠ¤íƒ ì¶”ì ì„ ìœ ì¶œí•˜ì§€ ì•ŠëŠ”ë‹¤.
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 });
 
-module.exports == app;
 
-app.listen('3000', function ( req, res) {
-	console.log('connect 3000 port');
+// ì´ë¯¸ì§€ ì—…ë¡œë“œ2
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "http://localhost");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
+
+var storage = multer.diskStorage({ //multers disk storage settings
+	destination: function (req, file, cb) {
+			cb(null, './uploads/')
+	},
+	filename: function (req, file, cb) {
+			var datetimestamp = Date.now();
+			cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+	}
+});
+	
+var upload = multer({ //multer settings
+								storage: storage
+						}).single('file');
+
+/** API path that will upload the files */
+app.post('/upload', function(req, res) {
+		upload(req,res,function(err){
+				if(err){
+						 res.json({error_code:1,err_desc:err});
+						 return;
+				}
+				 res.json({error_code:0,err_desc:null});
+		});
+});
+
+app.listen(3000);
+
+
+module.exports = app;

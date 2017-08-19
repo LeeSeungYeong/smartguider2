@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SmartGuider by PeaceCrew</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+		
+		<!-- 주소찾기 (Daum 우편번호 서비스) -->
+		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		
+		<!-- spot 구글 맵에서 위치 좌표 가져오기 -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=weather,visualization,panoramio"></script>
+
+    
+  </head>
+  <body class="container">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#/sights">Sights</a></li>
+      <li><a href="#/spots">Spots</a></li>
+    </ul>
+    <div ng-view></div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
+    <script src="//code.angularjs.org/1.2.25/angular-route.js"></script>
+    <script src="//code.angularjs.org/1.2.25/angular-resource.js"></script>
+		
+		<!-- 이미지 업로드 -->
+		<script>
+			// IE8과 IE9를 지원하기 위해 필요
+			FileAPI = {
+				jsPath: 'js/FileAPI.min.js/folder',
+				jsUrl: 'http://localhost.com:3000/js/FileAPI.min.js'
+				
+				staticPath: 'flash/FileAPI.flash.swf/folder/',
+				flashUrl: 'http://localhost.com:3000/js/fileAPI.flash.swf'
+			}
+		</script>
+		
+		<script src="libs/ng-file-upload-shim.min.js"></script>
+		<script type="text/javascript" src="libs/angular.min.js"></script>
+		<script src="libs/ng-file-upload.min.js"></script>
+		
+		
+		
+		<script src="js/SearchAddress.js"></script>
+		
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </body>
+</html>

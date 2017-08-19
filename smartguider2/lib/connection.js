@@ -1,9 +1,15 @@
 var mongoose = require('mongoose');
-var dbURI = 'mongodb://smartguider2:1234@ds113580.mlab.com:13580/heroku_823djmtx';
+//var dbUrl = 'mongodb://test:660616@ds035846.mlab.com:35846/heroku_9dsh4tgc';
+var dbUrl = 'mongodb://smartguider2:1234@ds113580.mlab.com:13580/heroku_823djmtx';
 
-mongoose.connect(dbURI);
+//var dbUrl = 'mongodb://peace:660616@ds031157.mlab.com:31157/heroku_r7dt4gs1';
 
-// ÄÁÆ®·Ñ + C¸¦ ´©¸£¸é ¸ù±¸½º ¿¬°á Á¾·á
+// mpromise is deprecated ì—ëŸ¬ í•´ê²°í•˜ê¸° ìœ„í•œ ì½”ë“œ
+mongoose.Promise = global.Promise;
+
+mongoose.connect(dbUrl);
+
+// ì»¨íŠ¸ë¡¤ + Cë¥¼ ëˆ„ë¥´ë©´ ëª½êµ¬ìŠ¤ ì—°ê²° ì¢…ë£Œ
 process.on('SIGINT', function() {
   mongoose.connection.close(function () {
     console.log('Mongoose default connection disconnected');
@@ -11,5 +17,5 @@ process.on('SIGINT', function() {
   });
 });
 
-require('../models/employee');
-require('../models/team');
+require('../models/spot');
+require('../models/sight');

@@ -1,0 +1,67 @@
+<ul class="breadcrumb">
+	<li><a>Sights</a></li>
+  <li class="active">{{sight.name}}
+  </li>
+</ul>
+<div class="panel panel-default clearfix">
+	<div class="panel-body">
+		<div class="button-bar">
+			<button class="btn btn-warning" ng-click="edit()" ng-hide="editing">수정</button>
+			<a href="#/sights" class="btn btn-success" ng-click="save()" ng-show="editing">저장</a>
+			<a href="#/sights" class="btn btn-danger" ng-click="cancel()" ng-show="editing">취소</a>
+    </div>
+    <div class="col-xs-12 col-md-4 text-center">
+      <h3 class="margin-top-reset">{{sight.name}}</h3>
+			<img ng-src="{{sight.image}}" image-fallback="images/building.jpg" class="spot-avatar">
+    </div>
+		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div class="form-group">
+				<label class="control-label">이름:</label>
+				<edit-in-line value="sight.name" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>전화번호:</label>
+				<edit-in-line value="sight.tel" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>홈페이지:</label>
+				<edit-in-line value="sight.homepage" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>설명:</label>
+				<edit-in-line value="sight.description" editing="editing"/>
+			</div>
+		</div>
+		<div ng-app="" class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div ng-init="sight={zip:'', address:''}" class="form-group">
+				<label class="control-label">주소</label><br>
+				<div class="in-line-container">
+					<div class="in-line-value" ng-hide="editing">{{sight.zip}}
+					</div>
+					<input class="in-line-input form-control" ng-show="editing" type="text" ng-model="sight.zip" placeholder="우편번호" />
+				</div>
+				<div class="in-line-container">
+					<div class="in-line-value" ng-hide="editing">{{sight.address}}</div>
+					<input class="in-line-input form-control" ng-show="editing" type="text" ng-model="sight.address" placeholder="주소" />
+				</div>
+				<input type="button" ng-click="search()" ng-show="editing" value="우편번호 찾기"><br>
+				<div class="container-fluid" id="wrap" style="display: none; border: 1px solid; margin: 5px 0; position: relative">
+					<img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 1" ng-click="foldDaumPostcode()" alt="접기 버튼">
+				</div>
+			</div>
+			<div class="form-group" ng-show="editing">
+				<!--
+				<label for="inputFile">사진:</label>
+				<input type="file" id="inputFile">
+				<edit-in-line value="sight.image" editing="editing"/>
+				-->
+				<label>사진:</label>
+				<form action='/upload' method="post" enctype="multipart/form-data" ng-show="editing">
+					<input type='file' name='upload'/>
+					<input type='submit'/>
+				</form>
+				<edit-in-line value="sight.image" editing="editing" />
+			</div>
+		</div>
+	</div>
+</div>

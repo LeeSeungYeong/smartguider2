@@ -1,0 +1,105 @@
+<ul class="breadcrumb">
+  <li><a href="#sights">Sights</a></li>
+  <li class="active">{{sight.name}}</li>
+</ul>
+
+<div class="panel panel-default clearfix">
+	<div class="panel-body">
+		<div class="col-xs-12 col-md-4 text-center">
+			<img ng-src="{{sight.image}}" image-fallback="images/sight.jpg" class="spot-avatar">
+    </div>
+		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div class="form-group">
+				<label>이름:</label>
+				<edit-in-line value="sight.name" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>전화번호:</label>
+				<edit-in-line value="sight.tel" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>홈페이지:</label>
+				<edit-in-line value="sight.homepage" editing="editing"/>
+			</div>
+			<div class="form-group">
+				<label>소개:</label>
+				<edit-in-line value="sight.description" editing="editing" edit-type="textarea"/>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div class="form-group">
+				<label class="control-label">주소</label><br>
+				<div class="in-line-container">
+					<div class="in-line-value" ng-hide="editing">{{sight.zip}}
+					</div>
+					<input class="in-line-input form-control" ng-show="editing" type="text" ng-model="sight.zip" placeholder="우편번호" />
+				</div>
+				<div class="in-line-container">
+					<div class="in-line-value" ng-hide="editing">{{sight.address}}</div>
+					<input class="in-line-input form-control" ng-show="editing" type="text" ng-model="sight.address" placeholder="주소" />
+				</div>
+				<input type="button" ng-click="search()" ng-show="editing" value="우편번호 찾기"><br>
+				<div class="container-fluid" id="wrap" style="display: none; border: 1px solid; margin: 5px 0; position: relative">
+					<img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 1" ng-click="foldDaumPostcode()" alt="접기 버튼">
+				</div>
+			</div>
+			<!--
+			<div class="form-group">
+				<label class="control-label">주소</label><br>
+				<input type="text" value="{{sight.zip}}" placeholder="우편번호" ng-show="editing" />
+				<input type="button" ng-click="search()" ng-show="editing" value="우편번호 찾기"><br>
+				<div id="wrap" style="display: none; border: 1px solid; width: 500px; height: 300px; margin: 5px 0; position: relative">
+					<img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 1" ng-click="foldDaumPostcode()" alt="접기 버튼">
+				</div>
+				<input type="text" value="{{sight.address}}" placeholder="주소" ng-show="editing" />
+			</div>
+			-->
+			<div class="form-group">
+				<label>사진:</label>
+				<form action='/upload' method="post" enctype="multipart/form-data" ng-show="editing">
+					<input type='file' name='upload'/>
+					<input type='submit'/>
+				</form>
+				<edit-in-line value="sight.image" editing="editing" />
+				<!--
+				<label for="inputFile">사진:</label>
+				<input type="file" id="myFile" />
+				-->
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+  <h4>Sight Belongings</h4>
+</div>
+<form class="form-horizontal">
+	<div class="form-group">
+		<div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="spot in sight.belongings">
+			<div class="panel panel-default spot-list-item">
+				<div class="panel-body">
+					<span class="icon-container"><i class="fa fa-3x fa-building"></i></span>
+					<span class="h4">{{spot.name}}</span>
+					<a href="#spots/{{spot._id}}" class="btn btn-sm btn-info" ng-hide="editing">
+						<i class="fa fa-eye"></i> View
+					</a>
+					<button class="btn btn-sm btn-danger" ng-click="delete(spot._id)" ng-show="editing">
+						<i class="fa fa-trash"> Delete</i>
+					</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="button-bar">
+			<button class="btn btn-warning" ng-click="edit()" ng-hide="editing">수정</button>
+			<a href="#spot/insert" class="btn btn-info" ng-show="editing">
+				<i class="fa fa-plus"></i> 건물 추가
+			</a>
+			<button class="btn btn-success" ng-click="save()" ng-show="editing">저장</button>
+			<button class="btn btn-danger" ng-click="cancel()" ng-show="editing">취소</button>
+		</div>
+	</div>
+</form>
+

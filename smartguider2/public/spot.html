@@ -1,0 +1,102 @@
+<ul class="breadcrumb">
+  <li><a href="#spots">Spots</a></li>
+  <li class="active">{{spot.name}}</li>
+</ul>
+
+<div class="panel panel-default clearfix">
+  <div class="panel-body">
+		<div class="input-group">
+						<input type='file' name='upload'/>
+						<input type='submit'/>
+					</div>
+    <div class="button-bar">
+      <button class="btn btn-warning" ng-click="edit()" ng-hide="editing">Edit</button>
+      <button class="btn btn-success" ng-click="save()" ng-show="editing">Save</button>
+      <button class="btn btn-danger" ng-click="cancel()" ng-show="editing">Cancel</button>
+    </div>
+    <div class="col-xs-12 col-md-4 text-center">
+      <h3 class="margin-top-reset">{{spot.name}}</h3>
+      <img ng-src="{{spot.image}}" image-fallback="images/building.png" class="spot-avatar">
+			
+			<!--
+			<div class="form-group">
+				<label>사진:</label>
+				<form action='/upload' method="post" enctype="multipart/form-data" ng-show="editing">
+					<div class="input-group">
+						<input type='file' name='upload'/>
+						<input type='submit'/>
+					</div>
+					
+				</form>
+				<edit-in-line value="spot.image" editing="editing" />
+			</div>
+			-->
+			
+			<div class="form-group">
+				<form role="form" editing="editing">
+					<div class="form-group"></div>
+					<label>사진:</label>
+					<input type='file' ng-file-select="onFileSelect($files)">
+				</form>
+				<edit-in-line value="spot.image" editing="editing" />
+			</div>
+		
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+      <div class="form-group">
+        <label class="control-label">이름:</label>
+        <edit-in-line value="spot.name" editing="editing"/>
+      </div>
+      <div class="form-group">
+        <label>전화번호:</label>
+        <edit-in-line value="spot.tel" editing="editing" />
+      </div>
+			<div class="form-group">
+				<label>홈페이지:</label>
+				<edit-in-line value="spot.homepage" editing="editing" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">층별:</label>
+				<ul class="address-lines">
+					<li ng-repeat="floor in spot.inside.floors track by $index">
+						<span ng-hide="editing">{{$index+1}}층 - {{floor}}</span>
+						<div ng-app ng-show="editing" class="input-group address-edit">
+							<span class="input-group-addon">{{$index+1}}층</span>
+							<input type="text" class="form-control" ng-model="spot.inside.floors[$index]" />
+							<span class="input-group-btn">
+								<button ng-click="address.addLine($index)" class="btn btn-success">
+									<i class="fa fa-plus"></i>
+								</button>
+								<button ng-click="address.removeLine($index)" ng-disabled="spot.inside.floors.length === 1" class="btn btn-danger">
+									<i class="fa fa-trash-o"></i>
+								</button>
+							</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div class="form-group">
+        <label>관광지:</label>
+        <edit-in-line value="spot.sight" editing="editing" edit-list="sights" edit-option="t.name for t in sights" edit-type="select" display-value="spot.sight.name" />
+      </div>
+      <div class="form-group">
+				<label>위치좌표(위도, 경도):</label>
+				<ul class="address-lines">
+					<li>
+						<edit-in-line value="spot.coordinate.latitude" editing="editing"/>
+					</li>
+					<li>
+						<edit-in-line value="spot.coordinate.longitude" 	editing="editing"/>
+					</li>
+				</ul>
+			</div>
+			<div class="map-container" ng-show="editing">
+				<g-map center="[{{spot.coordinate.latitude}}, {{spot.coordinate.longitude}}]" zoom="{{spot.coordinate.zoom}}"></g-map>
+			</div>
+			
+    </div>
+  </div>
+</div>
