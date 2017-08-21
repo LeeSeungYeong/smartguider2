@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SmartGuider by PeaceCrew</title>
+    <title>SmartGuider2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
@@ -16,12 +16,20 @@
 
     
   </head>
-  <body class="container">
-    <ul class="nav nav-pills">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#/sights">Sights</a></li>
-      <li><a href="#/spots">Spots</a></li>
+ <body class="container">
+  <nav class="navbar navbar-default">
+   <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Smartguider2</a>
+    </div>
+    <ul class="nav navbar-nav">
+	<li class="active"><a href="#">Home</a></li>
+      <li><a href="#/sights">관광지</a></li>
+      <li><a href="#/spots">관광요소</a></li>
     </ul>
+  </div>
+  </nav>
+
     <div ng-view></div>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
     <script src="//code.angularjs.org/1.2.25/angular-route.js"></script>
