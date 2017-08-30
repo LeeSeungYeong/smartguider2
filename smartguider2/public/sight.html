@@ -6,7 +6,7 @@
 <div class="panel panel-default clearfix">
 	<div class="panel-body">
 		<div class="col-xs-12 col-md-4 text-center">
-			<img ng-src="{{sight.image}}" image-fallback="images/sight.jpg" class="spot-avatar">
+			<img src="images/sight.jpg" class="spot-avatar">
     </div>
 		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
 			<div class="form-group">
@@ -16,10 +16,6 @@
 			<div class="form-group">
 				<label>전화번호:</label>
 				<edit-in-line value="sight.tel" editing="editing"/>
-			</div>
-			<div class="form-group">
-				<label>홈페이지:</label>
-				<edit-in-line value="sight.homepage" editing="editing"/>
 			</div>
 			<div class="form-group">
 				<label>소개:</label>
@@ -55,16 +51,18 @@
 			</div>
 			-->
 			<div class="form-group">
-				<label>사진:</label>
-				<form action='/upload' method="post" enctype="multipart/form-data" ng-show="editing">
-					<input type='file' name='upload'/>
-					<input type='submit'/>
-				</form>
-				<edit-in-line value="sight.image" editing="editing" />
-				<!--
-				<label for="inputFile">사진:</label>
-				<input type="file" id="myFile" />
-				-->
+				<label>위치좌표(위도, 경도):</label>
+				<ul class="address-lines">
+					<li>
+						<edit-in-line value="sight.coordinate.latitude" editing="editing"/>
+					</li>
+					<li>
+						<edit-in-line value="sight.coordinate.longitude" editing="editing"/>
+					</li>
+				</ul>
+				<div class="map-container" ng-show="editing">
+				<g-map center="[{{sight.coordinate.latitude}}, {{sight.coordinate.longitude}}]" zoom="{{spot.coordinate.zoom}}"></g-map>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -80,10 +78,10 @@
 					<span class="icon-container"><i class="fa fa-3x fa-building"></i></span>
 					<span class="h4">{{spot.name}}</span>
 					<a href="#spots/{{spot._id}}" class="btn btn-sm btn-info" ng-hide="editing">
-						<i class="fa fa-eye"></i> View
+						<i class="fa fa-eye"></i> 보기
 					</a>
 					<button class="btn btn-sm btn-danger" ng-click="delete(spot._id)" ng-show="editing">
-						<i class="fa fa-trash"> Delete</i>
+						<i class="fa fa-trash"> 삭제</i>
 					</button>
 
 				</div>
@@ -93,9 +91,9 @@
 	
 	<div class="form-group">
 		<div class="button-bar">
-			<button class="btn btn-warning" ng-click="edit()" ng-hide="editing">수정</button>
+			<button class="btn btn-warning" ng-click="edit()" ng-hide="editing">시설 추가 / 수정</button>
 			<a href="#spot/insert" class="btn btn-info" ng-show="editing">
-				<i class="fa fa-plus"></i> 건물 추가
+				<i class="fa fa-plus"></i> 시설 추가
 			</a>
 			<button class="btn btn-success" ng-click="save()" ng-show="editing">저장</button>
 			<button class="btn btn-danger" ng-click="cancel()" ng-show="editing">취소</button>

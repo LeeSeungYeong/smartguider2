@@ -9,10 +9,6 @@
 			<a href="#/sights" class="btn btn-success" ng-click="save()" ng-show="editing">저장</a>
 			<a href="#/sights" class="btn btn-danger" ng-click="cancel()" ng-show="editing">취소</a>
     </div>
-    <div class="col-xs-12 col-md-4 text-center">
-      <h3 class="margin-top-reset">{{sight.name}}</h3>
-			<img ng-src="{{sight.image}}" image-fallback="images/building.jpg" class="spot-avatar">
-    </div>
 		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
 			<div class="form-group">
 				<label class="control-label">이름:</label>
@@ -23,15 +19,11 @@
 				<edit-in-line value="sight.tel" editing="editing"/>
 			</div>
 			<div class="form-group">
-				<label>홈페이지:</label>
-				<edit-in-line value="sight.homepage" editing="editing"/>
-			</div>
-			<div class="form-group">
-				<label>설명:</label>
+				<label>소개:</label>
 				<edit-in-line value="sight.description" editing="editing"/>
 			</div>
 		</div>
-		<div ng-app="" class="col-xs-12 col-sm-6 col-md-4 form-offset">
+		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
 			<div ng-init="sight={zip:'', address:''}" class="form-group">
 				<label class="control-label">주소</label><br>
 				<div class="in-line-container">
@@ -48,19 +40,23 @@
 					<img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor: pointer; position: absolute; right: 0px; top: -1px; z-index: 1" ng-click="foldDaumPostcode()" alt="접기 버튼">
 				</div>
 			</div>
-			<div class="form-group" ng-show="editing">
-				<!--
-				<label for="inputFile">사진:</label>
-				<input type="file" id="inputFile">
-				<edit-in-line value="sight.image" editing="editing"/>
-				-->
-				<label>사진:</label>
-				<form action='/upload' method="post" enctype="multipart/form-data" ng-show="editing">
-					<input type='file' name='upload'/>
-					<input type='submit'/>
-				</form>
-				<edit-in-line value="sight.image" editing="editing" />
+			<div class="form-group">
+				<label>위치좌표(위도, 경도):</label>
+				<ul class="address-lines">
+					<li ng-show="editing">
+						<edit-in-line value="sight.coordinate.latitude" editing="editing"/>
+					</li>
+					<li ng-show="editing">
+						<edit-in-line value="sight.coordinate.longitude" editing="editing"/>
+					</li>
+				</ul>
 			</div>
+			</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 form-offset">
+			<div class="map-container" ng-show="editing">
+				<g-map center="[{{sight.coordinate.latitude}}, {{sight.coordinate.longitude}}]" zoom="{{spot.coordinate.zoom}}"></g-map>
+			</div>
+		</div>
 		</div>
 	</div>
 </div>

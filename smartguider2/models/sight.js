@@ -3,10 +3,10 @@ var postFind = require('mongoose-post-find');
 var async = require('async');
 var Schema = mongoose.Schema;
 var SightSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
+	name: {
+	  type: String,
+	  required: true
+	},
 	address: {
 		type: String
 	},
@@ -16,19 +16,23 @@ var SightSchema = new Schema({
 	tel: {
 		type: String
 	},
-	homepage: {
-		type: String
-	},
 	description: {
 		type: String
 	},
-	image: {
-		type: String,
-		default: 'images/sight.jpg'
+	coordinate: {
+		latitude: {
+			type: Number
+		},
+		longitude: {
+			type: Number
+		},
+		zoom: {
+			type: Number
+		}
 	},
-  belongings: {
+	belongings: {
     type: [Schema.Types.Mixed]
-  }
+	}
 });
 
 function _attachBelongings (Spot, result, callback) {
